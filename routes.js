@@ -157,6 +157,7 @@ router.get('/projects', project_controller.project_list);
 // GET request for one project image.
 router.get('/project/image/:id', project_controller.project_image_get);
 
+router.get('/api/projects', project_controller.project_list_api);
 
 
 /* Will be implemented in future if needed ---- *
