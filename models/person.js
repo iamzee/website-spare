@@ -1,6 +1,6 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema
+var Schema = mongoose.Schema;
 
 var PersonData = new Schema({
 	name: {
@@ -13,7 +13,7 @@ var PersonData = new Schema({
 		type: String,
 		max: 100,
 		default: 'unknown'
-	},
+    },
 	education: {
 		type: String,
 		required: true,
@@ -27,9 +27,9 @@ var PersonData = new Schema({
 	},
 	imageLink: {
 		type: String,
-		max: 1000
+        max: 1000
 	}
-})
+});
 
 //Export model
-module.exports = mongoose.model(' ', PersonData)
+module.exports = mongoose.model('Person', PersonData);

@@ -75,10 +75,10 @@ var enquiry_controller = require('./controllers/enquiryController');
 var product_controller = require('./controllers/productController');
 // var productcategory_controller = require('./controllers/productcategoryController');
 var project_controller = require('./controllers/projectController');
+var person_controller = require('./controllers/personController');
 
 
-
-
+router.get('/person/list', person_controller.person_list);
 
 /// ENQUIRY ROUTES ///
 
