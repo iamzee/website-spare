@@ -79,8 +79,18 @@ var person_controller = require('./controllers/personController');
 
 
 router.get('/person/list', person_controller.person_list);
-// router.post('/person/create', person_controller.person_create);
-router.get('/person/create', function(){});
+router.post('/person/create', person_controller.person_create);
+
+//
+router.get('/person/create', function(req,res) {
+    res.render('edit-about');
+});
+
+//Delete Person
+router.post('/person/:id/delete', person_controller.person_delete_post);
+
+//delete ll team
+router.get('/person/delete/all/team',person_controller.person_delete_all_get);
 
 /// ENQUIRY ROUTES ///
 
