@@ -80,7 +80,7 @@ var person_controller = require('./controllers/personController');
 
 router.get('/person/list', person_controller.person_list);
 // router.post('/person/create', person_controller.person_create);
-router.get('/person/create', person_controller.person_create);
+router.get('/person/create', function(){});
 
 /// ENQUIRY ROUTES ///
 
@@ -161,6 +161,7 @@ router.get('/project/image/:id', project_controller.project_image_get);
 
 router.get('/api/projects', project_controller.project_list_api);
 
+router.get('/api/project/sign-s3/put', project_controller.project_sign_s3_put_get)
 
 /* Will be implemented in future if needed ---- *
 /// CATEGORY ROUTES ///
