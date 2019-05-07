@@ -30,11 +30,11 @@ html
 
                           
                             a.collection-item.avatar(v-for="project in projects" @click='javascript:populate(project._id)')
-                                //- img.circle(src='/project/image/'+project.id, alt=project.name)
-                                //- img.circle(:src="'data:'+project.image.contentType+';base64,'+ project.image.data.data")
+                                img.circle(:src="project.images[0]", :alt="project.name")
+                                
                                 span.title.strong.grey-text.text-darken-2 {{project.name}}
-                                p.black-text {{project.description}}
-                                //- p.blue-text.text-lighten-1 Rs #{project.cost}
+                                p.black-text.truncate {{project.description}}
+                                
 
 
 
@@ -92,7 +92,7 @@ html
                                     .btn
                                         span Upload Images
                                         input#project-image(type='file', name='project_image', onchange="onFileUpload()")
-                                    .file-path-wrapper
+                                    //- .file-path-wrapper
                                         input.file-path.validate(type='text')
                                 
                                 .col.s12
@@ -102,9 +102,9 @@ html
                             
                             .row
                                 .col.s12
-                                    a.btn-flat.waves-effect.waves-red.red-text#delete-btn delete
-                                    button.btn.waves-effect.waves-green.teal(type="submit") Save product
+                                    button.btn.waves-effect.waves-green.teal(type="submit") Save
                                         i.material-icons.left save
+                                    a.btn-flat.waves-effect.waves-red.red-text#delete-btn delete
 
 
                 //- #category-modal.modal
