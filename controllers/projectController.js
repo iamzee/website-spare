@@ -8,6 +8,7 @@ const aws = require('aws-sdk')
 const S3_BUCKET = process.env.S3_BUCKET
 aws.config.region = process.env.AWS_REGION
 
+const s3 = new aws.S3()
 // -----
 
 var Project = require('../models/project')
@@ -105,9 +106,8 @@ exports.project_create_post = function(req, res) {
 			throw err
 		}
 		//successful - redirect to new book record.
-        // res.redirect('/dashboard/projects')
-        res.send(project)
-        
+		// res.redirect('/dashboard/projects')
+		res.send(project)
 	})
 	// fs.unlink(req.files[0].path, function(err) {
 	// 	if (err) {
@@ -124,12 +124,29 @@ exports.project_create_post = function(req, res) {
 
 // Handle Project delete on POST.
 exports.project_delete_post = function(req, res) {
-	Project.findByIdAndRemove(req.params.id, function(err) {
-		if (err) {
-			throw err
+	Project.findById(req.params.id, function(err, data) {
+		var params = {
+			Bucket: S3_BUCKET,
+			Delete: {
+				Objects: []
+			}
 		}
-		// Success - go to author list
-		res.send(true)
+
+		// console.log(data)
+
+		data.images.forEach(image => {
+			params.Delete.Objects.push({ Key: image.split('/').slice(-1)[0] })
+		})
+
+		s3.deleteObjects(params, function(err, data) {
+			// console.log(data)
+
+			if (err) return res.status(500).send(error)
+			Project.findByIdAndRemove(req.params.id, function(err) {
+				if (err) return res.status(500).send(error)
+				return res.send(true)
+			})
+		})
 	})
 
 	// res.send('NOT IMPLEMENTED: Project delete POST');
@@ -145,8 +162,8 @@ exports.project_update_post = function(req, res) {
 			throw err
 		}
 		//successful - redirect to new book record.
-        // res.redirect('/dashboard/projects')
-        res.send(project)
+		// res.redirect('/dashboard/projects')
+		res.send(project)
 	})
 
 	// var storage = multer.diskStorage({
@@ -211,7 +228,6 @@ exports.project_image_get = function(req, res) {
 }
 
 exports.project_sign_s3_put_get = (req, res) => {
-	const s3 = new aws.S3()
 	const fileName = req.query.fileName
 	const fileType = req.query.fileType
 
@@ -233,5 +249,22 @@ exports.project_sign_s3_put_get = (req, res) => {
 			url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
 		}
 		res.send(JSON.stringify(returnData))
+	})
+}
+
+exports.project_s3_delete_get = (req, res) => {
+	const filenameToRemove = req.query.fileName
+
+	const s3Params = {
+		Bucket: S3_BUCKET,
+		Key: filenameToRemove
+	}
+
+	s3.deleteObject(s3Params, function(err, data) {
+		if (err) {
+			console.error(err)
+			return res.status(500).send(err)
+		}
+		res.send(true)
 	})
 }

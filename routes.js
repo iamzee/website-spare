@@ -173,6 +173,8 @@ router.get('/api/projects', project_controller.project_list_api);
 
 router.get('/api/project/sign-s3/put', project_controller.project_sign_s3_put_get)
 
+router.get('/api/project/image/delete', project_controller.project_s3_delete_get)
+
 /* Will be implemented in future if needed ---- *
 /// CATEGORY ROUTES ///
 
