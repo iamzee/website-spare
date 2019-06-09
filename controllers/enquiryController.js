@@ -87,16 +87,16 @@ exports.enquiry_create_post = function(req, res) {
 
         let email = {
             to: 'sparc.ideas@gmail.com',
-            from: `${enquiry.name} <${enquiry.email}>`, //
+            from: `SpArc Enquiry <sparc@root-kings.com>`, //
             subject: `Enquiry: ${enquiry.comment} `,
             html: `<p>Body: ${enquiry.comment}. \
                         <br> \
                         <br>From: ${enquiry.name}  \
                         <br>Email: ${enquiry.email} \
-                        <br>Phone: ${enquiry.phone} `
+                        <br>Phone: ${enquiry.phone} </p>`
         }
 
-        sgMail.send(email)
+        sgMail.send(email).catch(console.error)
 
 		enquiry.save(function(err) {
 			if (err) {
@@ -126,16 +126,16 @@ exports.enquiry_contact_create_post = function(req, res) {
 	//console.log(enquiry);
     let email = {
         to: 'sparc.ideas@gmail.com',
-        from: `${enquiry.name} <${enquiry.email}>`, //
+        from: `SpArc Enquiry <sparc@root-kings.com>`, //
         subject: `Enquiry: ${enquiry.comment} `,
         html: `<p>Body: ${enquiry.comment}. \
                     <br> \
                     <br>From: ${enquiry.name}  \
                     <br>Email: ${enquiry.email} \
-                    <br>Phone: ${enquiry.phone} `
+                    <br>Phone: ${enquiry.phone} </p>`
     }
 
-    sgMail.send(email)
+    sgMail.send(email).catch(console.error)
 	//res.send('NOT IMPLEMENTED: Enquiry create POST');
 
 	enquiry.save(function(err) {
