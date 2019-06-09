@@ -86,7 +86,7 @@ exports.enquiry_create_post = function(req, res) {
 		}
 
         let email = {
-            to: 'dayshmookh_krushn.ghrcecs@raisoni.net',
+            to: 'sparc.ideas@gmail.com',
             from: `${enquiry.name} <${enquiry.email}>`, //
             subject: `Enquiry: ${enquiry.comment} `,
             html: `<p>Body: ${enquiry.comment}. \
@@ -125,7 +125,7 @@ exports.enquiry_contact_create_post = function(req, res) {
 
 	//console.log(enquiry);
     let email = {
-        to: 'dayshmookh_krushn.ghrcecs@raisoni.net',
+        to: 'sparc.ideas@gmail.com',
         from: `${enquiry.name} <${enquiry.email}>`, //
         subject: `Enquiry: ${enquiry.comment} `,
         html: `<p>Body: ${enquiry.comment}. \
