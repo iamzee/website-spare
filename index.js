@@ -9,7 +9,7 @@ var app = express()
 
 var port = process.env.PORT || 3000
 
-var dbport = process.env.MONGODB_URI || 'mongodb://sparcuser:sparcuserpassword1@ds133762.mlab.com:33762/sparc'
+var dbport = process.env.MONGODB_URI 
 
 var routes = require('./routes.js')
 
