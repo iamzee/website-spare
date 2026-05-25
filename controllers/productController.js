@@ -186,19 +186,19 @@ exports.product_update_post = function (req, res) {
 
 
 
-// Display detail image for a specific Enquiry.
+// Display detail image for a specific product.
 exports.product_image_get = function (req, res) {
     Product.findById(req.params.id)
         .exec(function (err, product) {
             if (err) {
-                throw err;
+                return res.redirect('/images/img1.jpg');
+            }
+
+            if (!product || !product.image || !product.image.data) {
+                return res.redirect('/images/img1.jpg');
             }
 
             res.contentType(product.image.contentType);
             res.send(product.image.data);
-
-            //res.send(list_products);
-
         });
-    // res.send('NOT IMPLEMENTED: Enquiry detail: ' + req.params.id);
 };

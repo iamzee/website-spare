@@ -157,19 +157,18 @@ router.get("/dashboard/projects", project_controller.project_edit);
 
 router.get("/projects", project_controller.project_list);
 
-// GET request for one project image.
-router.get("/project/image/:id", project_controller.project_image_get);
+// Project images are now served as static files from /images/projects/
 
 router.get("/api/projects", project_controller.project_list_api);
 
-router.get(
-  "/api/project/sign-s3/put",
-  project_controller.project_sign_s3_put_get
+router.post(
+  "/api/project/upload",
+  project_controller.project_image_upload_post
 );
 
 router.get(
   "/api/project/image/delete",
-  project_controller.project_s3_delete_get
+  project_controller.project_image_delete_get
 );
 
 /* Will be implemented in future if needed ---- *

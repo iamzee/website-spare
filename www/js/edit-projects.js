@@ -161,67 +161,42 @@ function clearproject() {
 	$('#delete-btn').attr('href', '!#')
 }
 
-const uploadFile = function(file, signedRequest, url) {
-	// showWait()
-	// currentVue = this
+const onFileUpload = function() {
+	let file = document.querySelector('#project-image').files[0]
+	if (file == null) return alert('No file selected.')
 
-	fetch(signedRequest, {
-		method: 'PUT',
-		mode: 'cors',
-		body: file
+	var formData = new FormData()
+	formData.append('file', file)
+
+	fetch('/api/project/upload', {
+		method: 'POST',
+		body: formData
 	})
-		.then(function(response) {
-			// projectsVue.selectedProject.images.push(file)
-			projectsVue.selectedProject.images.push(url)
-		})
-		.catch(function(error) {
-			M.toast({ html: 'Error occured! Check console for details.' })
-			console.error(error)
-		})
-		.then(function() {
-			// hideWait()
-		})
-}
-
-const getSignedRequest = function(file) {
-	// console.log(file)
-
-	fetch(`/api/project/sign-s3/put?fileName=${file.name}&fileType=${file.type}`)
 		.then(function(response) {
 			return response.json()
 		})
 		.then(function(data) {
-			console.log(data)
-			uploadFile(file, data.signedRequest, data.url)
+			projectsVue.selectedProject.images.push(data.url)
 		})
 		.catch(function(error) {
 			M.toast({ html: 'Error occured! Check console for details.' })
 			console.error(error)
 		})
 }
-const onFileUpload = function() {
-	let file = document.querySelector('#project-image').files[0]
-	// console.log(file)
-	if (file == null) return alert('No file selected.')
-	getSignedRequest(file)
-}
 
 function deleteImage(imageURL) {
-	let filename = imageURL.split('/').slice(-1)[0]
+	// imageURL is like /images/projects/filename.jpg
+	let filename = imageURL.split('/').pop()
 
 	fetch(`/api/project/image/delete?fileName=${filename}`)
 		.then(function(response) {
 			return response.json()
 		})
 		.then(function(data) {
-			// console.log(data)
-			// if (data) {
 			let index = projectsVue.selectedProject.images.indexOf(imageURL)
-			// console.log(filename)
 			if (index > -1) {
 				projectsVue.selectedProject.images.splice(index, 1)
 			}
-			// }
 		})
 		.catch(function(error) {
 			M.toast({ html: 'Error occured! Check console for details.' })
